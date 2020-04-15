@@ -1,3 +1,5 @@
+package oop
+
 /**
  * Welcome to "Learn Kotlin in 1 Hour" - Team MAST
  * Youtube : www.youtube.com/TeamMAST
@@ -14,6 +16,16 @@ fun main() {
     Button("Sign up Button").onClick()
 
     Button("Sign up Button").onTouch()
+
+    Color.BLUE
+
+    val result = when (getDataFromInternet()) {
+        is Result.Success -> println("Result is Success")
+        is Result.Error -> println("Result is an Error")
+        is Result.InProgress -> println("Result is in progress")
+        is Result.NetworkError -> println("Result is Network Error")
+    }
+
 
 }
 
@@ -39,15 +51,6 @@ abstract class Animal {
     open fun getHeight() { //can override because it is declared as open.
         println("Animal: getHeight()")
     }
-
-    fun getWeight() {} //cannot override .. we had a choice
-
-    val result = when(getDataFromInternet()) {
-        is Result.Success -> println("Result is OK")
-        is Result.Error -> println("Result is Error")
-        is Result.InProgress -> println("Result is in Progress")
-    }
-
 }
 
 class Dog(override val name: String) : Animal() {
@@ -92,35 +95,48 @@ class Button(val name: String) : OnClickListener {
 
 }
 
-// Sealed Classes - Extension to the Enum class
-/*enum class Result {
-    Success()
+// Sealed Classes - Extension to the Enums
+/*
+enum class Result {
+    Success,
     Error
-}*/
+}
+*/
+
+enum class Color {
+    RED,
+    BLUE,
+    GREEN
+}
+
+// Lets tryto understand what is the need of a sealed class.
 
 sealed class Result {
     data class Success(val data: String) : Result()
     data class Error(val error: String) : Result()
-    data class InProgress(val progess: Int) : Result()
+    data class InProgress(val progress: Int) : Result()
+    data class NetworkError(val error: String) : Result()
 }
 
+fun getDataFromInternet(): Result {
+    // .. body
+    /**
+     * 200 - Success
+     * 400 - Network Error
+     * 201 - In Progress
+     */
+    val resultCode = 400
 
-fun getDataFromInternet() : Result {
+    return if (resultCode == 200) {
+        Result.Success("Success")
+    } else if (resultCode == 201) {
+        Result.InProgress(20)
+    } else if (resultCode == 400) {
+        Result.NetworkError("Network Error")
+    } else {
+        Result.Error("Error")
+    }
 
-    //... logic
-
-    val resultCode = 100
-    return if(resultCode == 200) {
-        Result.Success("Data Download Success")
-    }
-    else if(resultCode == 100) {
-        val progress = 20
-        Result.InProgress(progress)
-    }
-    else {
-        Result.Error("Network Exception")
-    }
 }
 
-// BE MAST AND KEEP ROCKING !!
-
+// BE MAST AND KEEP  ROCKING !!!
