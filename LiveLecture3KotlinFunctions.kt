@@ -9,6 +9,8 @@ package kotlinfunctions
  * 4. Higher Order Functions
  *
  * Subscribe  | LIKE | SHARE
+ * Register for FREE Kotlin Course : https://forms.gle/yDsDA4ykD1qWDoZ49
+ * Youtube Channel : https://youtube.com/TeamMAST
  */
 
 fun main() {
